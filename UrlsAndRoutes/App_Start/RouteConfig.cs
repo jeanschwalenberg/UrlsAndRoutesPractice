@@ -10,7 +10,16 @@ using UrlsAndRoutes.Infrastructure;
 namespace UrlsAndRoutes {
     public class RouteConfig {
         public static void RegisterRoutes(RouteCollection routes) {
-            
+
+            routes.MapMvcAttributeRoutes();
+
+            routes.MapRoute("MyRoute", "{controller}/{action}/{id}",
+                new {
+                    controller = "Home", action = "Index",
+                    id = UrlParameter.Optional
+                });
+
+            /*  OLD ROUTES
             //constraint in Chrome
             routes.MapRoute("ChromeRoute", "{*catchall}",
                 new { controller = "Home", action = "Index" },
