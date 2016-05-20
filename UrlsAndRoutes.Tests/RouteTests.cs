@@ -83,17 +83,22 @@ namespace UrlsAndRoutes.Tests {
         }
 
         [TestMethod]
-        public void TesstIncomingRoutes() {
+        public void TestIncomingRoutes() {
+            TestRouteMatch("~/", "Home", "Index");
+            TestRouteMatch("~/Home", "Home", "Index");
+            TestRouteMatch("~/Home/Index", "Home", "Index");
 
-            //check for the URL that you hoped for
-            TestRouteMatch("~/Admin/Index", "Admin", "Index");
-            //check that the values are being obtained from the segments
-            TestRouteMatch("~/One/Two", "One", "Two");
+            TestRouteMatch("~/Home/About", "Home", "About");
+            TestRouteMatch("~/Home/About/MyId", "Home", "About", new { id = "MyId" });
+            TestRouteMatch("~/Home/About/MyId/More/Segments", "Home", "About",
+                new {
+                    id = "MyId",
+                    catchall = "More/Segments"
+                });
 
-            //ensure that too many or too few segments fails to match
-            TestRouteFail("~/Admin/Index/Segment");
-            TestRouteFail("~/Admin");
-            
+            TestRouteFail("~/Home/OtherAction");
+            TestRouteFail("~/Account/Index");
+            TestRouteFail("~/Account/About");   
         }
     }
 }
