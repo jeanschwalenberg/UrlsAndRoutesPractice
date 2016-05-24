@@ -6,7 +6,18 @@ namespace UrlsAndRoutes {
     public class RouteConfig {
 
         public static void RegisterRoutes(RouteCollection routes) {
+
+            routes.RouteExistingFiles = true;
+
             routes.MapMvcAttributeRoutes();
+
+            routes.IgnoreRoute("Content/{filename}.html");
+
+            routes.MapRoute("DiskFile", "Content/StaticContent.html",
+                new {
+                    controller = "Customer",
+                    action = "List",
+                });
 
             routes.Add(new Route("SayHello", new CustomRouteHandler()));
 
@@ -14,8 +25,10 @@ namespace UrlsAndRoutes {
                     "~/articles/Windows_3_1_Overview_html",
                     "~/old/_NET_1_0_Class_Library"));
 
-            routes.MapRoute("MyRoute", "{controller}/{action}");
-            routes.MapRoute("MyOtherRoute", "App/{action}", new { controller = "Home" });
+            routes.MapRoute("MyRoute", "{controller}/{action}", null,
+                new[] { "UrlsAndRoutes.Controllers" });
+            routes.MapRoute("MyOtherRoute", "App/{action}", new { controller = "Home" },
+                new[] { "UrlsAndRoutes.Controllers" });
 
             /*  OLD ROUTES
             //constraint in Chrome

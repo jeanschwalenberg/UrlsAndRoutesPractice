@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
 namespace UrlsAndRoutes.Controllers {
+    [RouteArea("Services")]
     [RoutePrefix("Users")]
     public class CustomerController : Controller {
 
